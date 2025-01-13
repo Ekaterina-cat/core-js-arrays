@@ -288,8 +288,12 @@ function distinct(arr) {
  *    createNDimensionalArray(4, 2) => [[[[0, 0], [0, 0]], [[0, 0], [0, 0]]], [[[0, 0], [0, 0]], [[0, 0], [0, 0]]]]
  *    createNDimensionalArray(1, 1) => [0]
  */
-function createNDimensionalArray(/* n, size */) {
-  throw new Error('Not implemented');
+function createNDimensionalArray(n, size) {
+  const arr =
+    n === 1
+      ? Array(size).fill(0)
+      : Array(size).fill(createNDimensionalArray(n - 1, size));
+  return arr;
 }
 
 /**
@@ -357,8 +361,14 @@ function calculateBalance(arr) {
  *    createChunks(['a', 'b', 'c', 'd', 'e'], 2) => [['a', 'b'], ['c', 'd'], ['e']]
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
-function createChunks(/* arr, chunkSize */) {
-  throw new Error('Not implemented');
+function createChunks(arr, chunkSize) {
+  return arr.reduce((brokenArr, elem, i) => {
+    if (i % chunkSize === 0) {
+      brokenArr.push([]);
+    }
+    brokenArr[brokenArr.length - 1].push(elem);
+    return brokenArr;
+  }, []);
 }
 
 /**
@@ -577,8 +587,24 @@ function shiftArray(arr, n) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const objNumFromStr = {
+    zero: 0,
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+    six: 6,
+    seven: 7,
+    eight: 8,
+    nine: 9,
+  };
+  const value = Object.values(objNumFromStr);
+  const sortdArr = arr.sort(
+    (a, b) => value.indexOf(objNumFromStr[a]) - value.indexOf(objNumFromStr[b])
+  );
+  return sortdArr;
 }
 
 /**
